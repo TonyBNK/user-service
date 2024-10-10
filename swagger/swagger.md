@@ -4,7 +4,6 @@
 <details>
 <summary>View Swagger YAML</summary>
 
-```yaml
 {
   "openapi": "3.0.0",
   "paths": {
@@ -818,8 +817,14 @@
     }
   }
 }
-```
 
 </details>
 
-<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FTonyBNK%2Fuser-service%2Fdev%2Fswagger%2Fswagger.yaml"></iframe>
+<script src="https://cdn.jsdelivr.net/npm/swagger-viewer/dist/bundle.js"></script>
+<div id="swagger-ui"></div>
+<script>
+  SwaggerViewer.initializePage({
+    url: 'https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml',
+    domNode: '#swagger-ui'
+  });
+</script>

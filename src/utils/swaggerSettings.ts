@@ -47,13 +47,18 @@ export const swaggerSettings = (app: INestApplication) => {
 <details>
 <summary>View Swagger YAML</summary>
 
-\`\`\`yaml
 ${yaml}
-\`\`\`
 
 </details>
 
-<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=${encodeURIComponent(`https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml`)}"></iframe>
+<script src="https://cdn.jsdelivr.net/npm/swagger-viewer/dist/bundle.js"></script>
+<div id="swagger-ui"></div>
+<script>
+  SwaggerViewer.initializePage({
+    url: 'https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml',
+    domNode: '#swagger-ui'
+  });
+</script>
 `;
   writeFileSync(swaggerMarkdownFilePath, markdown);
 };
