@@ -4,9 +4,10 @@ import {
   ValidationError,
   ValidationPipe,
 } from '@nestjs/common';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from '../exception-filters';
 import { ErrorResult } from '../types';
+import { swaggerSettings } from './swaggerSettings';
 
 const validationExceptionFactory = (errors: Array<ValidationError>): never => {
   const errorResult: ErrorResult = {
@@ -32,4 +33,6 @@ export const appSettings = (app: INestApplication) => {
   app.use(cookieParser());
   app.setGlobalPrefix('api/v1');
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  swaggerSettings(app);
 };
