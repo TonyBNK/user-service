@@ -53,7 +53,7 @@ ${yaml}
 
 </details>
 
-<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml"></iframe>
+<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=${encodeURIComponent(`swagger/swagger.yaml`)}"></iframe>
 `;
   writeFileSync(swaggerMarkdownFilePath, markdown);
 };
