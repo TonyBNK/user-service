@@ -29,7 +29,6 @@ export const swaggerSettings = (app: INestApplication) => {
 
   const swaggerDirectory = resolve('.', 'swagger');
   const swaggerYamlFilePath = resolve(swaggerDirectory, 'swagger.yaml');
-  const swaggerMarkdownFilePath = resolve(swaggerDirectory, 'swagger.md');
 
   if (!existsSync(swaggerDirectory)) {
     mkdirSync(swaggerDirectory);
@@ -40,25 +39,4 @@ export const swaggerSettings = (app: INestApplication) => {
     '$1',
   );
   writeFileSync(swaggerYamlFilePath, yaml);
-
-  const markdown = `
-# Swagger Specification
-
-<details>
-<summary>View Swagger YAML</summary>
-
-${yaml}
-
-</details>
-
-<script src="https://cdn.jsdelivr.net/npm/swagger-viewer/dist/bundle.js"></script>
-<div id="swagger-ui"></div>
-<script>
-  SwaggerViewer.initializePage({
-    url: 'https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml',
-    domNode: '#swagger-ui'
-  });
-</script>
-`;
-  writeFileSync(swaggerMarkdownFilePath, markdown);
 };
