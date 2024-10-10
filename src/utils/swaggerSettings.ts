@@ -44,9 +44,17 @@ export const swaggerSettings = (app: INestApplication) => {
   const markdown = `
 # Swagger Specification
 
+<details>
+<summary>View Swagger YAML</summary>
+
 \`\`\`yaml
 ${yaml}
 \`\`\`
+
+</details>
+
+<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=https://raw.githubusercontent.com/TonyBNK/user-service/dev/swagger/swagger.yaml"></iframe>
 `;
+  writeFileSync(swaggerMarkdownFilePath, markdown);
   writeFileSync(swaggerMarkdownFilePath, markdown);
 };
