@@ -822,4 +822,4 @@
 
 </details>
 
-<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=swagger%2Fswagger.yaml"></iframe>
+<iframe width="100%" height="500" frameborder="0" src="https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FTonyBNK%2Fuser-service%2Fdev%2Fswagger%2Fswagger.yaml"></iframe>
