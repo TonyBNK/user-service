@@ -28,7 +28,8 @@ export const swaggerSettings = (app: INestApplication) => {
   SwaggerModule.setup('api', app, document);
 
   const swaggerDirectory = resolve('.', 'swagger');
-  const swaggerFilePath = resolve(swaggerDirectory, 'swagger.yaml');
+  const swaggerYamlFilePath = resolve(swaggerDirectory, 'swagger.yaml');
+  const swaggerMarkdownFilePath = resolve(swaggerDirectory, 'swagger.md');
 
   if (!existsSync(swaggerDirectory)) {
     mkdirSync(swaggerDirectory);
@@ -38,5 +39,14 @@ export const swaggerSettings = (app: INestApplication) => {
     /\"(function[^"]+\")/g,
     '$1',
   );
-  writeFileSync(swaggerFilePath, yaml);
+  writeFileSync(swaggerYamlFilePath, yaml);
+
+  const markdown = `
+# Swagger Specification
+
+\`\`\`yaml
+${yaml}
+\`\`\`
+`;
+  writeFileSync(swaggerMarkdownFilePath, markdown);
 };
