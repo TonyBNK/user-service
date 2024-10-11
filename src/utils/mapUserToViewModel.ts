@@ -1,5 +1,5 @@
+import { UserViewModel } from '../common/types/view/user';
 import { User } from '../features/users/user.entity';
-import { UserViewModel } from '../types/view/user';
 
 export const mapUserToViewModel = (user: User): UserViewModel => ({
   id: user.id,

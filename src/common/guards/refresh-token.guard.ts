@@ -5,8 +5,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetExpiredTokenQuery } from '../features/expired-tokens/queries';
-import { TokenService } from '../infrastructure/token/token.service';
+import { GetExpiredTokenQuery } from '../../features/expired-tokens/queries';
+import { TokenService } from '../../infrastructure/token/token.service';
 
 @Injectable()
 export class RefreshTokenGuard implements CanActivate {

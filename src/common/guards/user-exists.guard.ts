@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetUserByIdQuery } from '../features/users/queries';
+import { GetUserByIdQuery } from '../../features/users/queries';
 
 @Injectable()
 export class UserExistsGuard implements CanActivate {

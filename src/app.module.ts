@@ -2,10 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PostgresModule } from './database/postgres.module';
-import { AuthModule } from './features/auth/auth.module';
-import { ExpiredTokensModule } from './features/expired-tokens/expired-tokens.module';
-import { TestingModule } from './features/testing/testing.module';
-import { UsersModule } from './features/users/users.module';
+import FeaturesModule from './features';
 
 @Module({
   imports: [
@@ -15,10 +12,7 @@ import { UsersModule } from './features/users/users.module';
     }),
     JwtModule.register({ global: true }),
     PostgresModule,
-    AuthModule,
-    UsersModule,
-    ExpiredTokensModule,
-    TestingModule,
+    FeaturesModule,
   ],
 })
 export class AppModule {}

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BasicStrategy } from '../../common/strategies';
 import { TokenModule } from '../../infrastructure/token/token.module';
-import { BasicStrategy } from '../../strategies';
 import {
   CreateUserHandler,
   DeleteUserHandler,

@@ -19,16 +19,16 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Response } from 'express';
-import { Cookies, User } from '../../decorators';
+import { Cookies, User } from '../../common/decorators';
 import {
   AccessTokenGuard,
   EmailOrLoginExistGuard,
   LoginGuard,
   RefreshTokenGuard,
-} from '../../guards';
-import { ErrorResult } from '../../types';
-import { LoginViewModel } from '../../types/view/login';
-import { MeViewModel } from '../../types/view/me';
+} from '../../common/guards';
+import { ErrorResult } from '../../common/types';
+import { LoginViewModel } from '../../common/types/view/login';
+import { MeViewModel } from '../../common/types/view/me';
 import { mapMeToViewModel } from '../../utils/mapMeToViewModel';
 import { CreateUserDto } from '../users/dto';
 import { GetUserByIdQuery } from '../users/queries';

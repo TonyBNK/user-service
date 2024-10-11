@@ -7,8 +7,11 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
-import { SortDirection } from '../../../constants';
-import { UserViewModel, userViewModelKeys } from '../../../types/view/user';
+import { SortDirection } from '../../../common/constants';
+import {
+  UserViewModel,
+  userViewModelKeys,
+} from '../../../common/types/view/user';
 
 export class GetUsersDto {
   @IsString()

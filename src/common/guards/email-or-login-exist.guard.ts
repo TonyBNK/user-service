@@ -5,7 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetUserByLoginOrEmailQuery } from '../features/users/queries';
+import { GetUserByLoginOrEmailQuery } from '../../features/users/queries';
 import { ErrorResult } from '../types';
 
 @Injectable()

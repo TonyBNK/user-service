@@ -27,7 +27,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
     const result = await this.dataSource
       .createQueryBuilder()
       .update(User)
-      .set(fieldsToUpdate)
+      .set({ ...fieldsToUpdate, updatedAt: new Date().toISOString() })
       .where('id = :id', { id })
       .execute();
 

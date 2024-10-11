@@ -1,4 +1,4 @@
-import { Paginator } from '../types';
+import { Paginator } from '../common/types';
 
 export const mapPaginatorToViewModel =
   <I, O>(mapper: (item: I) => O) =>

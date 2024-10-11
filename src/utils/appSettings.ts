@@ -5,8 +5,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import { HttpExceptionFilter } from '../exception-filters';
-import { ErrorResult } from '../types';
+import { HttpExceptionFilter } from '../common/exception-filters';
+import { ErrorResult } from '../common/types';
 import { swaggerSettings } from './swaggerSettings';
 
 const validationExceptionFactory = (errors: Array<ValidationError>): never => {
