@@ -3,9 +3,9 @@ import { afterEach } from 'node:test';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { v4 } from 'uuid';
+import { ErrorResult, Paginator } from '../../src/common/types';
+import { UserViewModel } from '../../src/common/types/view/user';
 import { CreateUserDto, UpdateUserDto } from '../../src/features/users/dto';
-import { ErrorResult, Paginator } from '../../src/types';
-import { UserViewModel } from '../../src/types/view/user';
 import { basicAuth, createTestApp, getRouterPaths } from '../utils';
 import { createValidUsersInput } from '../utils/create-valid-users-input';
 

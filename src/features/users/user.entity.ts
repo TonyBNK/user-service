@@ -8,7 +8,7 @@ export class User {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, length: 10 })
   login: string;
 
   @Column({ unique: true })
@@ -20,11 +20,14 @@ export class User {
   @Column()
   age: number;
 
-  @Column()
+  @Column({ length: 1000 })
   biography: string;
 
   @Column()
   createdAt: string;
+
+  @Column({ nullable: true })
+  updatedAt: string;
 
   static async createInstance({
     login,

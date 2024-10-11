@@ -7,10 +7,10 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { ApiPaginatorResponse } from '../../decorators/api-paginator-response.decorator';
-import { AccessTokenGuard } from '../../guards';
-import { Paginator } from '../../types';
-import { UserViewModel } from '../../types/view/user';
+import { ApiPaginatorResponse } from '../../common/decorators/api-paginator-response.decorator';
+import { AccessTokenGuard } from '../../common/guards';
+import { Paginator } from '../../common/types';
+import { UserViewModel } from '../../common/types/view/user';
 import { mapPaginatorToViewModel } from '../../utils/mapPaginatorToViewModel';
 import { mapUserToViewModel } from '../../utils/mapUserToViewModel';
 import { GetUsersDto } from './dto';

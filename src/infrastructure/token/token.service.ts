@@ -38,27 +38,20 @@ export class TokenService {
   async generateTokens(userId: string, userLogin: string) {
     const secret = this.configService.get<string>('JWT_SECRET');
 
+    const payload = {
+      sub: userId,
+      login: userLogin,
+    };
+
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(
-        {
-          sub: userId,
-          login: userLogin,
-        },
-        {
-          secret,
-          expiresIn: '10m',
-        },
-      ),
-      this.jwtService.signAsync(
-        {
-          sub: userId,
-          login: userLogin,
-        },
-        {
-          secret,
-          expiresIn: '20m',
-        },
-      ),
+      this.jwtService.signAsync(payload, {
+        secret,
+        expiresIn: '10m',
+      }),
+      this.jwtService.signAsync(payload, {
+        secret,
+        expiresIn: '20d',
+      }),
     ]);
 
     return {

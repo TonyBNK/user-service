@@ -22,10 +22,10 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { ApiPaginatorResponse } from '../../decorators/api-paginator-response.decorator';
-import { BasicAuthGuard, UserExistsGuard } from '../../guards';
-import { ErrorResult, Paginator } from '../../types';
-import { UserViewModel } from '../../types/view/user';
+import { ApiPaginatorResponse } from '../../common/decorators/api-paginator-response.decorator';
+import { BasicAuthGuard, UserExistsGuard } from '../../common/guards';
+import { ErrorResult, Paginator } from '../../common/types';
+import { UserViewModel } from '../../common/types/view/user';
 import { mapPaginatorToViewModel } from '../../utils/mapPaginatorToViewModel';
 import { mapUserToViewModel } from '../../utils/mapUserToViewModel';
 import {

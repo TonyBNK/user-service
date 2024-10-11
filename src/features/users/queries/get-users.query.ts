@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { SortDirection } from '../../../constants';
-import { Paginator } from '../../../types';
+import { SortDirection } from '../../../common/constants';
+import { Paginator } from '../../../common/types';
 import { GetUsersDto } from '../dto';
 import { User } from '../user.entity';
 
