@@ -1,8 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { UserDeletedEvent } from '../events';
-import { User } from '../user.entity';
+import { UsersRepository } from '../users.repository';
 
 export class DeleteUserCommand {
   constructor(public readonly id: string) {}
@@ -11,20 +9,15 @@ export class DeleteUserCommand {
 @CommandHandler(DeleteUserCommand)
 export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
   constructor(
-    @InjectDataSource() private readonly dataSource: DataSource,
+    private usersRepository: UsersRepository,
     private eventBus: EventBus,
   ) {}
 
   async execute({ id }: DeleteUserCommand): Promise<boolean> {
-    const result = await this.dataSource
-      .createQueryBuilder()
-      .delete()
-      .from(User)
-      .where('id = :id', { id })
-      .execute();
+    const result = await this.usersRepository.deleteUser(id);
 
     await this.eventBus.publish(new UserDeletedEvent(id));
 
-    return Boolean(result.affected);
+    return result;
   }
 }

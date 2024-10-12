@@ -1,8 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { CreateUserDto } from '../../users/dto';
-import { User } from '../../users/user.entity';
+import { UsersRepository } from '../../users/users.repository';
 import { UserRegisteredEvent } from '../events';
 
 export class RegisterUserCommand {
@@ -14,23 +12,13 @@ export class RegisterUserHandler
   implements ICommandHandler<RegisterUserCommand>
 {
   constructor(
-    @InjectDataSource() private readonly dataSource: DataSource,
+    private usersRepository: UsersRepository,
     private eventBus: EventBus,
   ) {}
 
-  async execute({
-    userDto: { email, login, password, age, biography },
-  }: RegisterUserCommand) {
-    const user = await User.createInstance({
-      email,
-      login,
-      password,
-      age,
-      biography,
-    });
+  async execute({ userDto }: RegisterUserCommand) {
+    await this.usersRepository.createUser(userDto);
 
-    await this.dataSource.getRepository(User).save(user);
-
-    await this.eventBus.publish(new UserRegisteredEvent(email));
+    await this.eventBus.publish(new UserRegisteredEvent(userDto.email));
   }
 }

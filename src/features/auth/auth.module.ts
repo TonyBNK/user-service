@@ -4,6 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy, LoginStrategy } from '../../common/strategies';
 import { TokenModule } from '../../infrastructure/token/token.module';
+import { ExpiredTokensModule } from '../expired-tokens/expired-tokens.module';
+import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import {
   LoginUserHandler,
@@ -33,7 +35,13 @@ const EventHandlers = [
 ];
 
 @Module({
-  imports: [PassportModule, CqrsModule, TokenModule],
+  imports: [
+    PassportModule,
+    CqrsModule,
+    TokenModule,
+    UsersModule,
+    ExpiredTokensModule,
+  ],
   controllers: [AuthController],
   providers: [
     ...Services,

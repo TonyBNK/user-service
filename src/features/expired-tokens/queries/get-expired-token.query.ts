@@ -1,7 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { ExpiredToken } from '../expired-token.entity';
+import { ExpiredTokensQueryRepository } from '../expired-tokens.query-repository';
 
 export class GetExpiredTokenQuery {
   constructor(public readonly token: string) {}
@@ -11,13 +10,11 @@ export class GetExpiredTokenQuery {
 export class GetExpiredTokenHandler
   implements IQueryHandler<GetExpiredTokenQuery>
 {
-  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
+  constructor(
+    private expiredTokensQueryRepository: ExpiredTokensQueryRepository,
+  ) {}
 
   async execute({ token }: GetExpiredTokenQuery): Promise<ExpiredToken | null> {
-    return this.dataSource
-      .getRepository(ExpiredToken)
-      .createQueryBuilder('et')
-      .where('et.token = :token', { token })
-      .getOne();
+    return this.expiredTokensQueryRepository.getExpiredToken(token);
   }
 }

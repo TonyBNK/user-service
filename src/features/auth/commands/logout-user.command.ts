@@ -1,8 +1,6 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { TokenService } from '../../../infrastructure/token/token.service';
-import { ExpiredToken } from '../../expired-tokens/expired-token.entity';
+import { ExpiredTokensRepository } from '../../expired-tokens/expired-tokens.repository';
 import { UserLoggedOutEvent } from '../events';
 
 export class LogoutUserCommand {
@@ -12,7 +10,7 @@ export class LogoutUserCommand {
 @CommandHandler(LogoutUserCommand)
 export class LogoutUserHandler implements ICommandHandler<LogoutUserCommand> {
   constructor(
-    @InjectDataSource() private readonly dataSource: DataSource,
+    private expiredTokensRepository: ExpiredTokensRepository,
     private eventBus: EventBus,
     private tokenService: TokenService,
   ) {}
@@ -20,11 +18,7 @@ export class LogoutUserHandler implements ICommandHandler<LogoutUserCommand> {
   async execute({ refreshToken }: LogoutUserCommand) {
     const { sub } = await this.tokenService.verifyToken(refreshToken);
 
-    const expiredToken = ExpiredToken.createInstance({
-      token: refreshToken,
-    });
-
-    await this.dataSource.getRepository(ExpiredToken).save(expiredToken);
+    await this.expiredTokensRepository.createExpiredToken(refreshToken);
 
     await this.eventBus.publish(new UserLoggedOutEvent(sub));
   }
