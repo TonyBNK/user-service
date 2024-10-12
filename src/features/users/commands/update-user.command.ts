@@ -1,9 +1,7 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { UpdateUserDto } from '../dto';
 import { UserUpdatedEvent } from '../events';
-import { User } from '../user.entity';
+import { UsersRepository } from '../users.repository';
 
 export class UpdateUserCommand {
   constructor(
@@ -15,24 +13,15 @@ export class UpdateUserCommand {
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
   constructor(
-    @InjectDataSource() private readonly dataSource: DataSource,
+    private usersRepository: UsersRepository,
     private eventBus: EventBus,
   ) {}
 
   async execute({ id, userDto }: UpdateUserCommand): Promise<boolean> {
-    const fieldsToUpdate = Object.fromEntries(
-      Object.entries(userDto).filter(([, value]) => value),
-    );
-
-    const result = await this.dataSource
-      .createQueryBuilder()
-      .update(User)
-      .set({ ...fieldsToUpdate, updatedAt: new Date().toISOString() })
-      .where('id = :id', { id })
-      .execute();
+    const result = await this.usersRepository.updateUser(id, userDto);
 
     await this.eventBus.publish(new UserUpdatedEvent(id));
 
-    return Boolean(result.affected);
+    return result;
   }
 }

@@ -22,6 +22,8 @@ import {
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersControllerSA } from './users.controller-sa';
+import { UsersQueryRepository } from './users.query-repository';
+import { UsersRepository } from './users.repository';
 
 const CommandHandlers = [
   CreateUserHandler,
@@ -38,6 +40,7 @@ const EventHandlers = [
   UserDeletedHandler,
   UserUpdatedHandler,
 ];
+const Services = [UsersRepository, UsersQueryRepository];
 
 @Module({
   imports: [
@@ -48,10 +51,12 @@ const EventHandlers = [
   ],
   controllers: [UsersController, UsersControllerSA],
   providers: [
+    ...Services,
     ...CommandHandlers,
     ...QueryHandlers,
     ...EventHandlers,
     BasicStrategy,
   ],
+  exports: [...Services],
 })
 export class UsersModule {}

@@ -1,7 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { User } from '../user.entity';
+import { UsersQueryRepository } from '../users.query-repository';
 
 export class GetUserByLoginOrEmailQuery {
   constructor(public readonly loginOrEmail: string) {}
@@ -11,22 +10,11 @@ export class GetUserByLoginOrEmailQuery {
 export class GetUserByLoginOrEmailHandler
   implements IQueryHandler<GetUserByLoginOrEmailQuery>
 {
-  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
+  constructor(private usersQueryRepository: UsersQueryRepository) {}
 
   async execute({
     loginOrEmail,
   }: GetUserByLoginOrEmailQuery): Promise<User | null> {
-    return this.dataSource.transaction(async (manager) => {
-      return manager
-        .getRepository(User)
-        .createQueryBuilder('u')
-        .where('u.login = :login', {
-          login: loginOrEmail,
-        })
-        .orWhere('u.email = :email', {
-          email: loginOrEmail,
-        })
-        .getOne();
-    });
+    return this.usersQueryRepository.getUserByLoginOrEmail(loginOrEmail);
   }
 }
