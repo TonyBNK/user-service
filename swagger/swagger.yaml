@@ -281,6 +281,104 @@
         ]
       }
     },
+    "/api/v1/users/images/avatar": {
+      "post": {
+        "operationId": "UsersController_uploadAvatar",
+        "summary": "Upload avatar for user (.png or .jpg (.jpeg) file (max size is 10MB))",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Uploaded image information object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageViewModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If file format is incorrect",
+            "example": {
+              "errorsMessages": [
+                {
+                  "message": "string",
+                  "field": "string"
+                }
+              ]
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                },
+                "example": {
+                  "errorsMessages": [
+                    {
+                      "message": "string",
+                      "field": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If user try to upload avatar for another user"
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users/images/avatar/{id}": {
+      "delete": {
+        "operationId": "UsersController_removeAvatar",
+        "summary": "Delete user's avatar",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/sa/users": {
       "post": {
         "operationId": "UsersControllerSA_createUser",
@@ -778,6 +876,45 @@
           "age",
           "biography",
           "createdAt"
+        ]
+      },
+      "UploadFileDto": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "file"
+        ]
+      },
+      "ImageViewModel": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "image url"
+          },
+          "width": {
+            "type": "integer",
+            "description": "image width"
+          },
+          "height": {
+            "type": "integer",
+            "description": "image height"
+          },
+          "fileSize": {
+            "type": "number",
+            "description": "image file size"
+          }
+        },
+        "required": [
+          "url",
+          "width",
+          "height",
+          "fileSize"
         ]
       },
       "UpdateUserDto": {
