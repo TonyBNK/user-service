@@ -11,6 +11,7 @@ export class TestingRepository {
   async deleteAllData() {
     await Promise.all([
       this.dataSource.createQueryBuilder().delete().from(User).execute(),
+      this.dataSource.createQueryBuilder().delete().from(Image).execute(),
       this.dataSource
         .createQueryBuilder()
         .delete()

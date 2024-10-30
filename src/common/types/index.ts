@@ -39,3 +39,10 @@ export class Paginator<T> {
   @ApiProperty({ type: 'integer' })
   totalCount: number;
 }
+
+export type UploadFileResponse = {
+  url: string;
+  width: number;
+  height: number;
+  size: number;
+};
