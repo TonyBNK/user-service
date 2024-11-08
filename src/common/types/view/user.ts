@@ -16,6 +16,9 @@ export class UserViewModel {
   @ApiProperty()
   biography: string;
 
+  @ApiProperty({ type: 'float' })
+  balance: number;
+
   @ApiProperty({ type: () => Date })
   createdAt: string;
 }
@@ -26,5 +29,6 @@ export const userViewModelKeys: Array<keyof UserViewModel> = [
   'email',
   'age',
   'biography',
+  'balance',
   'createdAt',
 ];

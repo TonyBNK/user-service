@@ -7,5 +7,6 @@ export const mapUserToViewModel = (user: User): UserViewModel => ({
   email: user.email,
   age: user.age,
   biography: user.biography,
+  balance: user.balance,
   createdAt: user.createdAt,
 });
