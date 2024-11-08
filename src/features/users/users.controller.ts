@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -24,6 +25,7 @@ import {
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { User } from '../../common/decorators';
 import { ApiPaginatorResponse } from '../../common/decorators/api-paginator-response.decorator';
@@ -36,9 +38,12 @@ import { UploadFileDto } from '../../infrastructure/files/s3/dto';
 import { mapPaginatorToViewModel } from '../../utils/mapPaginatorToViewModel';
 import { mapUserToViewModel } from '../../utils/mapUserToViewModel';
 import { GetImageByIdQuery } from '../images/queries';
-import { CreateUserAvatarCommand } from './commands/create-user-avatar.command';
-import { DeleteUserAvatarCommand } from './commands/delete-user-avatar.command';
-import { GetUsersDto } from './dto';
+import {
+  CreateUserAvatarCommand,
+  DeleteUserAvatarCommand,
+  TransferMoneyCommand,
+} from './commands';
+import { GetUsersDto, TransferMoneyDto } from './dto';
 import { GetUsersQuery } from './queries';
 
 @Controller('users')
@@ -127,5 +132,43 @@ export class UsersController {
   })
   async removeAvatar(@Param('id') avatarId: string) {
     await this.commandBus.execute(new DeleteUserAvatarCommand(avatarId));
+  }
+
+  @Post('transfer')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Transfer money to other user',
+  })
+  @ApiNoContentResponse({
+    description: 'Money successfully transferred',
+  })
+  @ApiBadRequestResponse({
+    description: 'If the inputModel has incorrect values',
+    type: ErrorResult,
+    example: {
+      errorsMessages: [
+        {
+          message: 'string',
+          field: 'string',
+        },
+      ],
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized',
+  })
+  @ApiUnprocessableEntityResponse({
+    description: 'Not enough money to transfer',
+  })
+  async transferMoney(
+    @User() user: { id: string },
+    @Body() body: TransferMoneyDto,
+  ) {
+    await this.commandBus.execute(
+      new TransferMoneyCommand(user.id, {
+        toUserId: body.toUserId,
+        amount: body.amount,
+      }),
+    );
   }
 }

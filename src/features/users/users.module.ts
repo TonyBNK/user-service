@@ -4,20 +4,23 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BasicStrategy } from '../../common/strategies';
 import { FilesModule } from '../../infrastructure/files/files.module';
+import { MoneyModule } from '../../infrastructure/money/money.module';
 import { TokenModule } from '../../infrastructure/token/token.module';
 import { ImagesModule } from '../images/images.module';
 import {
+  CreateUserAvatarHandler,
   CreateUserHandler,
+  DeleteUserAvatarHandler,
   DeleteUserHandler,
+  TransferMoneyHandler,
   UpdateUserHandler,
 } from './commands';
-import { CreateUserAvatarHandler } from './commands/create-user-avatar.command';
-import { DeleteUserAvatarHandler } from './commands/delete-user-avatar.command';
 import {
   UserAvatarCreatedHandler,
   UserAvatarDeletedHandler,
   UserCreatedHandler,
   UserDeletedHandler,
+  UserTransferredMoneyHandler,
   UserUpdatedHandler,
 } from './events';
 import {
@@ -37,6 +40,7 @@ const CommandHandlers = [
   UpdateUserHandler,
   CreateUserAvatarHandler,
   DeleteUserAvatarHandler,
+  TransferMoneyHandler,
 ];
 const QueryHandlers = [
   GetUsersHandler,
@@ -49,6 +53,7 @@ const EventHandlers = [
   UserUpdatedHandler,
   UserAvatarCreatedHandler,
   UserAvatarDeletedHandler,
+  UserTransferredMoneyHandler,
 ];
 const Services = [UsersRepository, UsersQueryRepository];
 
@@ -60,6 +65,7 @@ const Services = [UsersRepository, UsersQueryRepository];
     CqrsModule,
     FilesModule,
     ImagesModule,
+    MoneyModule,
   ],
   controllers: [UsersController, UsersControllerSA],
   providers: [

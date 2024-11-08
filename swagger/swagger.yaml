@@ -379,6 +379,68 @@
         ]
       }
     },
+    "/api/v1/users/transfer": {
+      "post": {
+        "operationId": "UsersController_transferMoney",
+        "summary": "Transfer money to other user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferMoneyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Money successfully transferred"
+          },
+          "400": {
+            "description": "If the inputModel has incorrect values",
+            "example": {
+              "errorsMessages": [
+                {
+                  "message": "string",
+                  "field": "string"
+                }
+              ]
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                },
+                "example": {
+                  "errorsMessages": [
+                    {
+                      "message": "string",
+                      "field": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Not enough money to transfer"
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/sa/users": {
       "post": {
         "operationId": "UsersControllerSA_createUser",
@@ -864,6 +926,9 @@
           "biography": {
             "type": "string"
           },
+          "balance": {
+            "type": "float"
+          },
           "createdAt": {
             "format": "date-time",
             "type": "string"
@@ -875,6 +940,7 @@
           "email",
           "age",
           "biography",
+          "balance",
           "createdAt"
         ]
       },
@@ -915,6 +981,24 @@
           "width",
           "height",
           "fileSize"
+        ]
+      },
+      "TransferMoneyDto": {
+        "type": "object",
+        "properties": {
+          "toUserId": {
+            "type": "string",
+            "description": "Performs user receiver ID"
+          },
+          "amount": {
+            "type": "float",
+            "description": "Performs the amount of transfer",
+            "example": 1.01
+          }
+        },
+        "required": [
+          "toUserId",
+          "amount"
         ]
       },
       "UpdateUserDto": {

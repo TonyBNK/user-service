@@ -29,6 +29,9 @@ export class User {
   @Column({ nullable: true })
   updatedAt: string;
 
+  @Column({ type: 'numeric', precision: 10, scale: 2, default: 0.0 })
+  balance: number;
+
   static async createInstance({
     login,
     email,
@@ -47,6 +50,7 @@ export class User {
     user.age = age;
     user.biography = biography;
     user.createdAt = new Date().toISOString();
+    user.balance = 10.0;
 
     return user;
   }
