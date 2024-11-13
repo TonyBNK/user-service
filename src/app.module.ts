@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PostgresModule } from './database/postgres.module';
+import { RedisModule } from './database/redis.module';
 import FeaturesModule from './features';
 
 @Module({
@@ -12,6 +13,7 @@ import FeaturesModule from './features';
     }),
     JwtModule.register({ global: true }),
     PostgresModule,
+    RedisModule,
     FeaturesModule,
   ],
 })

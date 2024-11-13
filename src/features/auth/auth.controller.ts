@@ -156,8 +156,6 @@ export class AuthController {
     description: 'Unauthorized',
   })
   async authMe(@User() user: { id: string; login: string }) {
-    console.log('user: ', user);
-
     const userInfo = await this.queryBus.execute(new GetUserByIdQuery(user.id));
 
     return mapMeToViewModel(userInfo!);

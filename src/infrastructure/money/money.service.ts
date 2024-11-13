@@ -14,20 +14,15 @@ export class MoneyService {
 
   async transferMoney({ fromUserId, toUserId, amount }: TransferMoneyDto) {
     return this.dataSource.transaction('REPEATABLE READ', async (manager) => {
-      const [fromUser, toUser] = await Promise.all([
-        manager
-          .getRepository(User)
-          .createQueryBuilder('u')
-          .where('u.id = :id', { id: fromUserId })
-          .setLock('pessimistic_write')
-          .getOne(),
-        manager
-          .getRepository(User)
-          .createQueryBuilder('u')
-          .where('u.id = :id', { id: toUserId })
-          .setLock('pessimistic_write')
-          .getOne(),
-      ]);
+      const users = await manager
+        .getRepository(User)
+        .createQueryBuilder('u')
+        .where('u.id IN (:...ids)', { ids: [fromUserId, toUserId] })
+        .setLock('pessimistic_write')
+        .getMany();
+
+      const fromUser = users.find((user) => user.id === fromUserId);
+      const toUser = users.find((user) => user.id === toUserId);
 
       if (!fromUser || !toUser) {
         throw new NotFoundException('Such user not found');
@@ -37,20 +32,21 @@ export class MoneyService {
         throw new UnprocessableEntityException('Not enough money to transfer');
       }
 
-      await Promise.all([
-        manager
-          .createQueryBuilder()
-          .update(User)
-          .set({ balance: () => `balance - ${amount}` })
-          .where('id = :id', { id: fromUserId })
-          .execute(),
-        manager
-          .createQueryBuilder()
-          .update(User)
-          .set({ balance: () => `balance + ${amount}` })
-          .where('id = :id', { id: toUserId })
-          .execute(),
-      ]);
+      await manager
+        .createQueryBuilder()
+        .update(User)
+        .set({
+          balance: () => `
+      CASE 
+        WHEN id = :fromUserId THEN balance - :amount
+        WHEN id = :toUserId THEN balance + :amount
+        ELSE balance
+      END
+    `,
+        })
+        .where('id IN (:...ids)', { ids: [fromUserId, toUserId] })
+        .setParameters({ fromUserId, toUserId, amount })
+        .execute();
     });
   }
 }

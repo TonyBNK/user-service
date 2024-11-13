@@ -50,7 +50,7 @@ export class User {
     user.age = age;
     user.biography = biography;
     user.createdAt = new Date().toISOString();
-    user.balance = 10.0;
+    user.balance = 0.0;
 
     return user;
   }
