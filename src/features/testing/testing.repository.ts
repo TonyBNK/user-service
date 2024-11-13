@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ExpiredToken } from '../expired-tokens/expired-token.entity';
+import { Image } from '../images/image.entity';
 import { User } from '../users/user.entity';
 
 @Injectable()
