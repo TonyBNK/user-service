@@ -1,7 +1,7 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
+import { UserViewModel } from 'apps/user-service/src/common/types/view/user';
 import request from 'supertest';
 import { App } from 'supertest/types';
-import { UserViewModel } from '../../src/common/types/view/user';
 import { basicAuth, bearerAuth, createTestApp, getRouterPaths } from '../utils';
 import { createValidUsersInput } from '../utils/create-valid-users-input';
 

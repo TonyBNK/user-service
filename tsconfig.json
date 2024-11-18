@@ -16,6 +16,51 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/decorators-lib": [
+        "libs/decorators-lib/src"
+      ],
+      "@app/decorators-lib/*": [
+        "libs/decorators-lib/src/*"
+      ],
+      "@app/exception-filters-lib": [
+        "libs/exception-filters-lib/src"
+      ],
+      "@app/exception-filters-lib/*": [
+        "libs/exception-filters-lib/src/*"
+      ],
+      "@app/auth-lib": [
+        "libs/auth-lib/src"
+      ],
+      "@app/auth-lib/*": [
+        "libs/auth-lib/src/*"
+      ],
+      "@app/files-lib": [
+        "libs/files-lib/src"
+      ],
+      "@app/files-lib/*": [
+        "libs/files-lib/src/*"
+      ],
+      "@app/payments-lib": [
+        "libs/payments-lib/src"
+      ],
+      "@app/payments-lib/*": [
+        "libs/payments-lib/src/*"
+      ],
+      "@app/utils-lib": [
+        "libs/utils-lib/src"
+      ],
+      "@app/utils-lib/*": [
+        "libs/utils-lib/src/*"
+      ],
+      "@app/types-lib": [
+        "libs/types-lib/src"
+      ],
+      "@app/types-lib/*": [
+        "libs/types-lib/src/*"
+      ]
+    }
   }
 }
