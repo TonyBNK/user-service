@@ -1,8 +1,95 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/user-service/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/user-service/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/user-service",
+  "projects": {
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-service/tsconfig.app.json"
+      }
+    },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification-service/tsconfig.app.json"
+      }
+    },
+    "decorators-lib": {
+      "type": "library",
+      "root": "libs/decorators-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/decorators-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/decorators-lib/tsconfig.lib.json"
+      }
+    },
+    "exception-filters-lib": {
+      "type": "library",
+      "root": "libs/exception-filters-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/exception-filters-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/exception-filters-lib/tsconfig.lib.json"
+      }
+    },
+    "auth-lib": {
+      "type": "library",
+      "root": "libs/auth-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/auth-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/auth-lib/tsconfig.lib.json"
+      }
+    },
+    "files-lib": {
+      "type": "library",
+      "root": "libs/files-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/files-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/files-lib/tsconfig.lib.json"
+      }
+    },
+    "payments-lib": {
+      "type": "library",
+      "root": "libs/payments-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/payments-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/payments-lib/tsconfig.lib.json"
+      }
+    },
+    "utils-lib": {
+      "type": "library",
+      "root": "libs/utils-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/utils-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/utils-lib/tsconfig.lib.json"
+      }
+    },
+    "types-lib": {
+      "type": "library",
+      "root": "libs/types-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/types-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/types-lib/tsconfig.lib.json"
+      }
+    }
   }
 }

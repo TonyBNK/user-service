@@ -1,11 +1,14 @@
+import { ErrorResult, Paginator } from '@app/types-lib';
 import { HttpStatus, INestApplication } from '@nestjs/common';
+import { UserViewModel } from 'apps/user-service/src/common/types/view/user';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+} from 'apps/user-service/src/features/users/dto';
 import { afterEach } from 'node:test';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { v4 } from 'uuid';
-import { ErrorResult, Paginator } from '../../src/common/types';
-import { UserViewModel } from '../../src/common/types/view/user';
-import { CreateUserDto, UpdateUserDto } from '../../src/features/users/dto';
 import { basicAuth, createTestApp, getRouterPaths } from '../utils';
 import { createValidUsersInput } from '../utils/create-valid-users-input';
 
